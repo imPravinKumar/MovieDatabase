@@ -9,7 +9,7 @@ import java.sql.SQLException;
  *
  * @author sqlitetutorial.net
  */
-public class InsertApp {
+public class MovieDB {
 
     /**
      * Connect to the test.db database
@@ -18,7 +18,7 @@ public class InsertApp {
      */
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:C://sqlite/db/test.db";
+        String url = "jdbc:sqlite:C://sqlite/db/movie.db";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -31,11 +31,13 @@ public class InsertApp {
     /**
      * Insert a new row into the warehouses table
      *
-     * @param name
-     * @param capacity
+     * @param Actor_name
+     * @param Actress_name
+     * @param Dict_name
+     * @param Year
      */
-    public void insert(String name, double capacity) {
-        String sql = "INSERT INTO movieDB(Actor_name,Actress_name,Dict_name,Year) VALUES(?,?,?,?)";
+    public void insert(String Actor_name, String Actress_name, String Dict_name, int Year) {
+        String sql = "INSERT INTO movie(Actor_name,Actress_name,Dict_name,Year) VALUES(?,?,?,?)";
 
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
