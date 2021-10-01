@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author sqlitetutorial.net
+ * 
  */
 public class MovieDB {
 
