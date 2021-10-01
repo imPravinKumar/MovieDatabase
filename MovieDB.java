@@ -1,19 +1,19 @@
 package net.sqlitetutorial;
 
-import java.sql.DriverManager;
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  *
  * @author sqlitetutorial.net
  */
-public class SelectApp {
+public class InsertApp {
 
     /**
      * Connect to the test.db database
+     *
      * @return the Connection object
      */
     private Connection connect() {
@@ -28,36 +28,44 @@ public class SelectApp {
         return conn;
     }
 
-    
     /**
-     * select all rows in the warehouses table
+     * Insert a new row into the warehouses table
+     *
+     * @param name
+     * @param capacity
      */
-    public void selectAll(){
-        String sql = "SELECT id, name, capacity FROM moviedb";
-        
+    public void insert(String name, double capacity) {
+        String sql = "INSERT INTO movieDB(Actor_name,Actress_name,Dict_name,Year) VALUES(?,?,?,?)";
+
         try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
-            
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getString("Actor Name") +  "\t" + 
-                                   rs.getString("Actress Name") + "\t" +
-                                   rs.getString("Director Name") + "\t" +
-                                   rs.getInt("Year"));
-            }
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, Actor_name);
+            pstmt.setString(2, Actress_name);
+            pstmt.setDouble(3, Dict_name);
+            pstmt.setInt(4, Year);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    
-   
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SelectApp app = new SelectApp();
-        app.selectAll();
+
+        InsertApp app = new InsertApp();
+        // insert three new rows
+        app.insert("Vijay","Malivika Mohan","Lokesh", 2021);
+        app.insert("Kavin","Amritha Aiyer","Vineeth Varaprasad",2021);
+        app.insert("Raai Laxmi"," Sakshi Agarwal","Vinoo Venkatesh",2021);
+        app.insert("Yogi Babu","Malavika Menon","Sakthi Chidambaram",2021);
+        app.insert(" Bharath","Aparna Vinod","Sharang",2021);
+        app.insert(" Harish Kalyan","Sundeep Kishan"," Chimbu Deven",2021);
+        app.insert("Pavel Navageethan","Aishwarya Rajesh"," Rathindran R. Prasad",2021);
+        app.insert("Arvind Swamy","Suriya Sivakumar"," Sarjun KM",2021);
+        app.insert(" Pradeep Anthony"," TJ Bhanu","Arun Prabu Purushothaman",2021);
+        app.insert(" Samuthirakani","Athmiya"," Subramaniam Siva",2021);
     }
 
 }
